@@ -1,0 +1,1439 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/users": {
+      "post": {
+        "operationId": "UsersController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The user has been successfully created."
+          },
+          "400": {
+            "description": "Bad Request."
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "ADMIN: create new user",
+        "tags": [
+          "Users"
+        ]
+      },
+      "get": {
+        "operationId": "UsersController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Return all user."
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "ADMIN: Get all user",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "operationId": "UsersController_findMe",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the user by ID."
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "ADMIN: /:id, USER: /me to get current user",
+        "tags": [
+          "Users"
+        ]
+      },
+      "patch": {
+        "operationId": "UsersController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Return the user updated by ID."
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "ADMIN: /:id, USER: /me to update current user",
+        "tags": [
+          "Users"
+        ]
+      },
+      "delete": {
+        "operationId": "UsersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the user deleted by ID."
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "ADMIN: /:id, USER: /me delete current user",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "summary": "Register",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "summary": "Login",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/test": {
+      "get": {
+        "operationId": "AuthController_test",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Test"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Test",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/admin": {
+      "get": {
+        "operationId": "AuthController_admin",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Admin only"
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Admin only",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "operationId": "AuthController_refresh",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token refreshed"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "summary": "Refresh token",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/otp": {
+      "post": {
+        "operationId": "AuthController_otp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "summary": "OTP send",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/tasks": {
+      "post": {
+        "operationId": "TasksController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "User create a task",
+        "tags": [
+          "Tasks"
+        ]
+      },
+      "get": {
+        "operationId": "TasksController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get a task by id",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/admin": {
+      "get": {
+        "operationId": "TasksController_findAllForAdmin",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "ADMIN: Get all tasks",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/user": {
+      "get": {
+        "operationId": "TasksController_findUserTasks",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get all tasks created by user",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/tasker": {
+      "get": {
+        "operationId": "TasksController_findTaskerTasks",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get all tasks assigned to tasker",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/{id}/apply": {
+      "patch": {
+        "operationId": "TasksController_apply",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Tasker apply for a task",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/{task_id}/choose/{tasker_id}": {
+      "patch": {
+        "operationId": "TasksController_choose",
+        "parameters": [
+          {
+            "name": "task_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tasker_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "User choose a tasker for a task",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/{id}/pay": {
+      "patch": {
+        "operationId": "TasksController_accept",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Tasker accept a task",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/{id}/accept": {
+      "patch": {
+        "operationId": "TasksController_adminAccept",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "ADMIN: Tasker accept a task",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/{id}/complete": {
+      "patch": {
+        "operationId": "TasksController_complete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Tasker complete a task",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/{id}/finish": {
+      "patch": {
+        "operationId": "TasksController_finish",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "User rate a tasker",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/{id}/reject": {
+      "patch": {
+        "operationId": "TasksController_reject",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Tasker reject a task",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/{id}/cancel": {
+      "patch": {
+        "operationId": "TasksController_cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "User rate a tasker",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/tasks/{id}": {
+      "delete": {
+        "operationId": "TasksController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "User cancel a task",
+        "tags": [
+          "Tasks"
+        ]
+      }
+    },
+    "/taskers": {
+      "post": {
+        "operationId": "TaskersController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Taskers"
+        ]
+      },
+      "get": {
+        "operationId": "TaskersController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Taskers"
+        ]
+      },
+      "patch": {
+        "operationId": "TaskersController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTaskerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Taskers"
+        ]
+      }
+    },
+    "/taskers/{id}": {
+      "get": {
+        "operationId": "TaskersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Taskers"
+        ]
+      },
+      "delete": {
+        "operationId": "TaskersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Taskers"
+        ]
+      }
+    },
+    "/skills": {
+      "post": {
+        "operationId": "SkillsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSkillDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Skills"
+        ]
+      },
+      "get": {
+        "operationId": "SkillsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Skills"
+        ]
+      }
+    },
+    "/skills/{id}": {
+      "get": {
+        "operationId": "SkillsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Skills"
+        ]
+      },
+      "patch": {
+        "operationId": "SkillsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSkillDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Skills"
+        ]
+      },
+      "delete": {
+        "operationId": "SkillsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Skills"
+        ]
+      }
+    },
+    "/notifications/test": {
+      "get": {
+        "operationId": "NotificationsController_test",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Test notification",
+        "tags": [
+          "Notifications"
+        ]
+      }
+    },
+    "/notifications": {
+      "get": {
+        "operationId": "NotificationsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Get all notifications for user",
+        "tags": [
+          "Notifications"
+        ]
+      },
+      "patch": {
+        "operationId": "NotificationsController_markAllAsRead",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Mark all notifications as read",
+        "tags": [
+          "Notifications"
+        ]
+      },
+      "delete": {
+        "operationId": "NotificationsController_deleteAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Delete all notifications",
+        "tags": [
+          "Notifications"
+        ]
+      }
+    },
+    "/notifications/{notification_id}": {
+      "patch": {
+        "operationId": "NotificationsController_markAsRead",
+        "parameters": [
+          {
+            "name": "notification_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Mark a notification as read",
+        "tags": [
+          "Notifications"
+        ]
+      },
+      "delete": {
+        "operationId": "NotificationsController_delete",
+        "parameters": [
+          {
+            "name": "notification_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "summary": "Delete a notification",
+        "tags": [
+          "Notifications"
+        ]
+      }
+    },
+    "/reviews": {
+      "post": {
+        "operationId": "ReviewsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReviewDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT-auth": []
+          }
+        ],
+        "tags": [
+          "Reviews"
+        ]
+      },
+      "get": {
+        "operationId": "ReviewsController_findAll",
+        "parameters": [
+          {
+            "name": "tasker_id",
+            "required": false,
+            "in": "query",
+            "description": "ID of the tasker to get reviews",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "task_id",
+            "required": false,
+            "in": "query",
+            "description": "ID of specific review",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Reviews"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Cats example",
+    "description": "The cats API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "JWT-auth": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http",
+        "name": "JWT-auth",
+        "description": "Enter JWT token",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "example": "John",
+            "description": "The name of the user"
+          },
+          "last_name": {
+            "type": "string",
+            "example": "Doe",
+            "description": "The last name of the user"
+          },
+          "email": {
+            "type": "string",
+            "example": "JohnDoe@gmail.com",
+            "description": "The email of the user"
+          },
+          "phone_number": {
+            "type": "string",
+            "description": "Số điện thoại Việt Nam",
+            "example": "0123456789",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "password": {
+            "type": "string",
+            "description": "Mật khẩu với các yêu cầu cụ thể",
+            "example": "StrongP@ssw0rd!"
+          },
+          "gender": {
+            "type": "string",
+            "example": "MALE"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "example": "1999-12-31"
+          },
+          "role": {
+            "type": "string",
+            "example": "USER",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ]
+          },
+          "avatar": {
+            "type": "string",
+            "example": "https://example"
+          }
+        },
+        "required": [
+          "first_name",
+          "last_name",
+          "email",
+          "phone_number",
+          "password",
+          "gender",
+          "date_of_birth",
+          "role"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "admin@gmail.com",
+            "description": "The email of the user"
+          },
+          "password": {
+            "type": "string",
+            "example": "Admin123@!",
+            "description": "The password of the user"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "RefreshTokenDto": {
+        "type": "object",
+        "properties": {
+          "refresh_token": {
+            "type": "string",
+            "description": "The refresh token"
+          }
+        },
+        "required": [
+          "refresh_token"
+        ]
+      },
+      "OtpDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "admin@gmail.com",
+            "description": "The email of the user"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "CreateTaskDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Task title",
+            "description": "The title of the task"
+          },
+          "description": {
+            "type": "string",
+            "example": "Task description",
+            "description": "The description of the task"
+          },
+          "skill_id": {
+            "type": "number",
+            "example": "skill ID",
+            "description": "The skill of the task"
+          },
+          "district": {
+            "type": "string",
+            "example": "district ID",
+            "description": "The district of the task"
+          },
+          "ward": {
+            "type": "string",
+            "example": "street name",
+            "description": "The street of the task"
+          },
+          "detail_address": {
+            "type": "string",
+            "example": "14 Xuaan Thuy",
+            "description": "The address of the task"
+          },
+          "estimated_duration": {
+            "type": "number",
+            "example": "100",
+            "description": "The duration of the task"
+          },
+          "fee_per_hour": {
+            "type": "string",
+            "example": "1000000",
+            "description": "The fee per hour of the task"
+          },
+          "start_date": {
+            "format": "date-time",
+            "type": "string",
+            "example": "1999-12-31",
+            "description": "The start date of the task"
+          },
+          "end_date": {
+            "format": "date-time",
+            "type": "string",
+            "example": "1999-12-31",
+            "description": "The end date of the task"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "skill_id",
+          "district",
+          "ward",
+          "detail_address",
+          "estimated_duration",
+          "fee_per_hour",
+          "start_date",
+          "end_date"
+        ]
+      },
+      "CreateTaskerDto": {
+        "type": "object",
+        "properties": {
+          "work_area": {
+            "description": "Work area",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "experience": {
+            "type": "string",
+            "description": "Experience"
+          },
+          "skillIds": {
+            "description": "Skills IDs",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      },
+      "UpdateTaskerDto": {
+        "type": "object",
+        "properties": {
+          "work_area": {
+            "description": "Work area",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "experience": {
+            "type": "string",
+            "description": "Experience"
+          },
+          "skillIds": {
+            "description": "Skills IDs",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      },
+      "CreateSkillDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Clean house"
+          },
+          "description": {
+            "type": "string",
+            "example": "Clean the house, do the laundry, and wash the dishes"
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ]
+      },
+      "UpdateSkillDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Clean house"
+          },
+          "description": {
+            "type": "string",
+            "example": "Clean the house, do the laundry, and wash the dishes"
+          }
+        }
+      },
+      "CreateReviewDto": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "number"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "task_id": {
+            "type": "number"
+          },
+          "image": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "rating",
+          "comment",
+          "task_id",
+          "image"
+        ]
+      }
+    }
+  }
+}
